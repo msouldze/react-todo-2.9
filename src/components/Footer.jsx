@@ -1,5 +1,5 @@
-import './Footer.css'
-import TasksFilter from "../TasksFilter"
+import '../styles/Footer.css'
+import TasksFilter from "./TasksFilter"
 
 export default function Footer() {
     return (

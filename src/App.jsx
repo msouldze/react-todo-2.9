@@ -1,7 +1,7 @@
-import './App.css'
+import './styles/App.css'
 import NewTaskForm from './components/NewTaskForm.jsx'
-import TaskList from './components/TaskList/TaskList.jsx'
-import Footer from './components/Footer/Footer.jsx'
+import TaskList from './components/TaskList.jsx'
+import Footer from './components/Footer.jsx'
 
 function App() {
 

@@ -1,6 +1,6 @@
 import { formatDistanceToNow } from "date-fns";
-import './TaskList.css';
-import Task from "../Task";
+import '../styles/TaskList.css';
+import Task from "./Task";
 
 function dateFormatter(date) {
     const result = formatDistanceToNow(
