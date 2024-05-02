@@ -1,29 +1,30 @@
-import { formatDistanceToNow } from "date-fns";
-import '../styles/TaskList.css';
+import { useState } from "react";
+import { useTasksListContext } from "./TaskProvider";
 import Task from "./Task";
-
-function dateFormatter(date) {
-    const result = formatDistanceToNow(
-        date,
-        {includeSeconds: true}
-    )
-    return result;
-}
+import '../styles/TaskList.css';
 
 function TaskList() {
+
+    const { tasks } = useTasksListContext();
+    const [tasksList, setTasksList] = useState(tasks);
+
+    function handleDelete(index) {
+        const reducedList = tasksList.filter(task => task.id !== index)
+        setTasksList(reducedList);
+    }
+
+    function handleChange(value, id) {
+        const [task] = tasksList.filter(task => task.id === id);
+        task.title = value;
+        setTasksList(tasksList);
+    }
+
     return (
         <>
             <ul className="todo-list">
-                <li className="completed">
-                    <Task description={'Completed task'} date={`created ${dateFormatter(new Date(2024, 4, 0, 13, 48, 15))} ago`} />
-                </li>
-                <li className="editing">
-                    <Task description={'Editing task'} date={`created ${dateFormatter(new Date(2024, 4, 0, 10, 15, 0))} ago`} />
-                    <input type="text" className="edit" value="Editing task" />
-                </li>
-                <li>
-                    <Task description={'Active task'} date={`created ${dateFormatter(new Date(2024, 4, 0, 10, 15, 0))} ago`} />
-                </li>
+                {tasksList.map((task) => 
+                    <Task task={task} key={task.id} onDelete={handleDelete} onChange={handleChange} />
+                )}
             </ul>
         </>
     )
