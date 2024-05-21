@@ -12,7 +12,7 @@ export default function TasksEdit({id, title, onChange, onKeyDown}) {
     
     return (
         <>
-            <input type="text" className="edit" value={newTitle} onKeyDown={(e) => onKeyDown(e)} onChange={(e) => updateTitle(e, id)} />
+            <input type="text" className="edit" value={newTitle} onKeyDown={onKeyDown} onChange={(e) => updateTitle(e, id)} />
         </>
     )
 }
