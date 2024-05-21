@@ -1,8 +1,8 @@
 import { formatDistanceToNow } from "date-fns";
 
-function dateFormatter(date) {
+function dateFormatter() {
     const result = formatDistanceToNow(
-        date,
+        new Date(2024, 4, 0, 13, 48, 15),
         {includeSeconds: true}
     )
     return result;

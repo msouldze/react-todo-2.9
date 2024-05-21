@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TasksEdit from "./TasksEdit";
-import Button from "./Button";
 import dateFormatter from "../utils/utils";
 
-function Task({task, onDelete, onChange }) {
-    const {id, title, date} = task;
+function Task({todo, onDelete, onChange }) {
+    const {id, title, completed} = todo;
     
     const [statusState, setStatusState] = useState('');
-    const [checked, setChecked] = useState(false);
+    const [checked, setChecked] = useState(completed);
 
-    function handleClick() {
+    useEffect(() => {
+        if(completed) {
+            setStatusState('completed');
+        }
+    }, [completed])
+
+    function handleChange() {
         const status = checked ? '' : 'completed';
         setStatusState(status);
         setChecked(!checked);
@@ -30,13 +35,13 @@ function Task({task, onDelete, onChange }) {
         <>
             <li className={statusState}>
                 <div className="view">
-                    <input className="toggle" type="checkbox" onClick={handleClick}/>
+                    <input className="toggle" type="checkbox" onChange={handleChange} checked={checked} />
                     <label>
                         <span className="description">{title}</span>
-                        <span className="created">{`created ${dateFormatter(date)} ago`}</span>
+                        <span className="created">{`created ${dateFormatter()} ago`}</span>
                     </label>
-                    <Button addClass='icon-edit' onClick={handleEdit} />
-                    <Button addClass='icon-destroy' onClick={() => onDelete(id)} />
+                    <button className='icon icon-edit' onClick={handleEdit}></button>
+                    <button className='icon icon-destroy' onClick={() => onDelete(id)}></button>
                 </div>
                 {statusState === 'editing' ? <TasksEdit id={id} title={title} onChange={onChange} onKeyDown={handleKeyDown} /> : ''}
             </li>

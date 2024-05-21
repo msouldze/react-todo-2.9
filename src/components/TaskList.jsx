@@ -1,29 +1,26 @@
 import { useState } from "react";
-import { useTasksListContext } from "./TaskProvider";
 import Task from "./Task";
 import '../styles/TaskList.css';
 
-function TaskList() {
-
-    const { tasks } = useTasksListContext();
-    const [tasksList, setTasksList] = useState(tasks);
+function TaskList({ todos }) {
+    const [todosList, setTodosList] = useState(todos);
 
     function handleDelete(index) {
-        const reducedList = tasksList.filter(task => task.id !== index)
-        setTasksList(reducedList);
+        const reducedList = todosList.filter(todo => todo.id !== index)
+        setTodosList(reducedList);
     }
 
     function handleChange(value, id) {
-        const [task] = tasksList.filter(task => task.id === id);
-        task.title = value;
-        setTasksList(tasksList);
+        const [todo] = todosList.filter(todo => todo.id === id);
+        todo.title = value;
+        setTodosList(todosList);
     }
 
     return (
         <>
             <ul className="todo-list">
-                {tasksList.map((task) => 
-                    <Task task={task} key={task.id} onDelete={handleDelete} onChange={handleChange} />
+                {todosList.map((todo) => 
+                    <Task todo={todo} key={todo.id} onDelete={handleDelete} onChange={handleChange} />
                 )}
             </ul>
         </>
