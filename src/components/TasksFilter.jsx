@@ -1,28 +1,40 @@
 import { useState } from 'react'
 
-export default function TasksFilter() {
-    // const [selected, setSelected] = useState(false);
-    // const [notSelected, setNotSelected] = useState(true);
-    
-    // function handleFilter(event) {
-    //     event.target.classList.add('selected');
-    //     setSelected(true);
-    //     setNotSelected(false);
-    // }
+export default function TasksFilter({ onClick }) {
+    const [all, setAll] = useState(true);
+    const [active, setActive] = useState(false);
+    const [completed, setCompleted] = useState(false);
 
-    const btns = ['All', 'Active', 'Completed'];
-
+    function handleFilter(event) {
+        if(event.target.innerText === 'All') {
+            setAll(true);
+            setActive(false);
+            setCompleted(false);
+            onClick(event);
+        } else if(event.target.innerText === 'Active') {
+            setActive(true);
+            setAll(false);
+            setCompleted(false);
+            onClick(event);
+        } else if(event.target.innerText === 'Completed') {
+            setCompleted(true);
+            setAll(false);
+            setActive(false);
+            onClick(event);
+        }
+    }
     return (
         <>
             <ul className="filters">
-                {btns.map((btn, i) => {
-                    let selected = i === 0 ? 'selected' : '';
-                    return (
-                        <li key={btn}>
-                            <button className={selected}>{btn}</button>
-                        </li>
-                    )
-                })}
+                <li>
+                    <button className={all ? 'selected' : undefined} onClick={handleFilter}>All</button>
+                </li>
+                <li>
+                    <button className={active ? 'selected' : undefined} onClick={handleFilter}>Active</button>
+                </li>
+                <li>
+                    <button className={completed ? 'selected' : undefined} onClick={handleFilter}>Completed</button>
+                </li>
             </ul>
         </>
     )
