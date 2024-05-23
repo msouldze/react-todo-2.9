@@ -1,30 +1,28 @@
 import '../styles/Footer.css'
 import { useState } from 'react';
+import { useEffect } from 'react';
 import TasksFilter from "./TasksFilter"
 import { useTasksListContext } from "./TaskProvider";
 
 export default function Footer() {
     const { todos, setTodos } = useTasksListContext();
-    // const [todosList, setTodosList] = useState(todos);
     const activeTodos = todos.filter(todo => !todo.completed);
+    const [activeTodosCount, setActiveTodosCount] = useState(activeTodos.length);
+    
+    useEffect(() => {
+        setActiveTodosCount(activeTodos.length);
+    }, [todos]);
 
-    function handleFilter(event) {
-        if(event.target.innerText === 'All') {
-            setTodos([...todos]);
-        } else if(event.target.innerText === 'Active') {
-            setTodos([...activeTodos]);
-        } else if(event.target.innerText === 'Completed') {
-            const completedTodos = todos.filter(todo => todo.completed);
-            setTodos([...completedTodos]);
-        }
-    }
+    // function handleDelete() {
+    //     setTodos({...activeTodos});
+    // }
 
     return (
         <>
             <footer className="footer">
-                <span className="todo-count">{activeTodos.length} items left</span>
-                <TasksFilter onClick={handleFilter} />
-                <button className="clear-completed">Clear completed</button>
+                <span className="todo-count">{activeTodosCount} items left</span>
+                <TasksFilter />
+                <button className="clear-completed" >Clear completed</button>
             </footer>
         </>
     )

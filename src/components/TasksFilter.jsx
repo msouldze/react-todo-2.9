@@ -1,40 +1,43 @@
-import { useState } from 'react'
+import { useFiltersContext } from './FilterProvider';
 
-export default function TasksFilter({ onClick }) {
-    const [all, setAll] = useState(true);
-    const [active, setActive] = useState(false);
-    const [completed, setCompleted] = useState(false);
+export default function TasksFilter() {
+    const { filters, setFilters } = useFiltersContext();
+    const buttons = Object.keys(filters);
 
     function handleFilter(event) {
         if(event.target.innerText === 'All') {
-            setAll(true);
-            setActive(false);
-            setCompleted(false);
-            onClick(event);
+            setFilters({
+                All: true,
+                Active: false,
+                Completed: false
+            })
         } else if(event.target.innerText === 'Active') {
-            setActive(true);
-            setAll(false);
-            setCompleted(false);
-            onClick(event);
+            setFilters({
+                All: false,
+                Active: true,
+                Completed: false
+            })
         } else if(event.target.innerText === 'Completed') {
-            setCompleted(true);
-            setAll(false);
-            setActive(false);
-            onClick(event);
+            setFilters({
+                All: false,
+                Active: false,
+                Completed: true
+            })
         }
     }
+
     return (
         <>
             <ul className="filters">
-                <li>
-                    <button className={all ? 'selected' : undefined} onClick={handleFilter}>All</button>
-                </li>
-                <li>
-                    <button className={active ? 'selected' : undefined} onClick={handleFilter}>Active</button>
-                </li>
-                <li>
-                    <button className={completed ? 'selected' : undefined} onClick={handleFilter}>Completed</button>
-                </li>
+                {
+                    buttons.map((button) => {
+                        return (
+                            <li key={button}>
+                                <button className={filters[button] ? 'selected' : undefined} onClick={handleFilter}>{button}</button>
+                            </li>
+                        )
+                    })
+                }
             </ul>
         </>
     )

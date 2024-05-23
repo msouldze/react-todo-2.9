@@ -4,15 +4,14 @@ export default function TasksEdit({id, title, onChange, onKeyDown}) {
     
     const [newTitle, setTitle] = useState(title);
 
-    const updateTitle = (e, id) => {
-        const { value } = e.target;
-        onChange(value, id);
-        setTitle(value);
+    const updateTitle = (id, e) => {
+        onChange(id, e);
+        setTitle(e.target.value);
     }
     
     return (
         <>
-            <input type="text" className="edit" value={newTitle} onKeyDown={onKeyDown} onChange={(e) => updateTitle(e, id)} />
+            <input type="text" className="edit" value={newTitle} onKeyDown={onKeyDown} onChange={(e) => updateTitle(id, e)} />
         </>
     )
 }

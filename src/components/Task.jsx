@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import TasksEdit from "./TasksEdit";
 import dateFormatter from "../utils/utils";
 
-function Task({todo, onDelete, onChange }) {
+function Task({todo, onDelete, onChange, onChecked }) {
     const {id, title, completed} = todo;
     
     const [statusState, setStatusState] = useState('');
@@ -14,14 +14,11 @@ function Task({todo, onDelete, onChange }) {
         }
     }, [completed])
 
-    function handleChange() {
+    function handleChange(e) {
         const status = checked ? '' : 'completed';
         setStatusState(status);
         setChecked(!checked);
-    }
-
-    function handleEdit() {
-        setStatusState('editing');
+        onChecked(id, e);
     }
 
     function handleKeyDown(event) {
@@ -40,10 +37,10 @@ function Task({todo, onDelete, onChange }) {
                         <span className="description">{title}</span>
                         <span className="created">{`created ${dateFormatter()} ago`}</span>
                     </label>
-                    <button className='icon icon-edit' onClick={handleEdit}></button>
+                    <button className='icon icon-edit' onClick={() => setStatusState('editing')}></button>
                     <button className='icon icon-destroy' onClick={() => onDelete(id)}></button>
                 </div>
-                {statusState === 'editing' ? <TasksEdit id={id} title={title} onChange={onChange} onKeyDown={handleKeyDown} /> : ''}
+                {statusState === 'editing' && <TasksEdit id={id} title={title} onChange={onChange} onKeyDown={handleKeyDown} />}
             </li>
         </>
     )
