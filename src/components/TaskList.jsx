@@ -26,14 +26,14 @@ function TaskList() {
         setTodos([...todos]);
     }
 
+    const filteredTodosList = todos.filter(filterMethods[filter]);
+    
     return (
         <>
             <ul className="todo-list">
-                {todos
-                    .filter(filterMethods[filter])
-                    .map((todo) => 
-                        <Task todo={todo} key={todo.id} onDelete={handleDelete} onChange={handleChange} onChecked={handleCheck} />
-                )}
+                {filteredTodosList.map((todo) => 
+                    <Task todo={todo} key={todo.id} onDelete={handleDelete} onChange={handleChange} onChecked={handleCheck} />)
+                }
             </ul>
         </>
     )

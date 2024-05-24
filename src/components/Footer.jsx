@@ -13,16 +13,16 @@ export default function Footer() {
         setActiveTodosCount(activeTodos.length);
     }, [todos]);
 
-    // function handleDelete() {
-    //     setTodos({...activeTodos});
-    // }
+    function handleDelete() {
+        setTodos([...activeTodos]);
+    }
 
     return (
         <>
             <footer className="footer">
                 <span className="todo-count">{activeTodosCount} items left</span>
                 <TasksFilter />
-                <button className="clear-completed" >Clear completed</button>
+                <button className="clear-completed" onClick={handleDelete}>Clear completed</button>
             </footer>
         </>
     )

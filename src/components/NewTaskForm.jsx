@@ -4,7 +4,6 @@ import { useTasksListContext } from "./TaskProvider";
 export default function NewTaskForm() {
     const { todos, setTodos } = useTasksListContext();
     const nextId = todos[todos.length - 1].id;
-    console.log(nextId);
 
     function addTodo(event) {
       const todo = {
