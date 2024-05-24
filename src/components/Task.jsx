@@ -12,11 +12,10 @@ function Task({todo, onDelete, onChange, onChecked }) {
         if(completed) {
             setStatusState('completed');
         }
-    }, [completed])
+    }, [])
 
     function handleChange(e) {
-        const status = checked ? '' : 'completed';
-        setStatusState(status);
+        checked ? setStatusState('') : setStatusState('completed');
         setChecked(!checked);
         onChecked(id, e);
     }

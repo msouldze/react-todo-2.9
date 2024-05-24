@@ -6,6 +6,7 @@ import { useFiltersContext } from './FilterProvider';
 function TaskList() {
     const { todos, setTodos } = useTasksListContext();
     const { filterMethods, filters } = useFiltersContext();
+
     const filterBtn = Object.keys(filters);
     const filter = filterBtn.filter(btn => filters[btn])
 
@@ -25,13 +26,13 @@ function TaskList() {
         todo.completed = e.target.checked;
         setTodos([...todos]);
     }
-
-    const filteredTodosList = todos.filter(filterMethods[filter]);
     
     return (
         <>
             <ul className="todo-list">
-                {filteredTodosList.map((todo) => 
+                {todos
+                    .filter(filterMethods[filter])
+                    .map((todo) => 
                     <Task todo={todo} key={todo.id} onDelete={handleDelete} onChange={handleChange} onChecked={handleCheck} />)
                 }
             </ul>

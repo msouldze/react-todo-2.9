@@ -6,17 +6,17 @@ function TaskProvider({children}) {
     const [error, setError] = useState();
     const [todos, setTodos] = useState(null);
 
-    const getTodos = async () => {
-        try {
-            const response = await fetch('https://jsonplaceholder.typicode.com/todos');
-            const todos = await response.json();
-            setTodos([...todos.slice(0, 9)]);
-        } catch(e) {
-            setError(e);
-        }
-    }
-
     useEffect(() => {
+        const getTodos = async () => {
+            try {
+                const response = await fetch('https://jsonplaceholder.typicode.com/todos');
+                const todos = await response.json();
+                setTodos([...todos]);
+            } catch(e) {
+                setError(e);
+            }
+        }
+
         getTodos();
     }, []);
 
